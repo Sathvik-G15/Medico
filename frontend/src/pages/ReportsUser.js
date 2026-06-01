@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import '../CSS/ReportsUser.css';
 
@@ -7,7 +7,7 @@ const UserReports = ({ uid }) => {
   const [message, setMessage] = useState({ text: '', type: '' });
   const [loading, setLoading] = useState(true);
 
-  const fetchReports = async () => {
+  const fetchReports = useCallback(async () => {
     if (!uid) return;
     try {
       setLoading(true);
@@ -24,11 +24,11 @@ const UserReports = ({ uid }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [uid]);
 
   useEffect(() => {
     fetchReports();
-  }, [uid]);
+  }, [fetchReports]);
 
   const UserIcon = () => (
     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import '../CSS/Reports.css';
 
 const ReportsPage = () => {
-  const { uid, role } = useContext(AuthContext);
+  const { uid } = useContext(AuthContext);
   const [file, setFile] = useState(null);
   const [name, setName] = useState('');
   const [message, setMessage] = useState({ text: '', type: '' });
@@ -18,7 +18,7 @@ const ReportsPage = () => {
     setFile(selectedFile);
   };
 
-  const fetchReports = async () => {
+  const fetchReports = useCallback(async () => {
     if (!uid) return;
     try {
       setLoading(true);
@@ -30,7 +30,7 @@ const ReportsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [uid]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -107,7 +107,7 @@ const ReportsPage = () => {
 
   useEffect(() => {
     fetchReports();
-  }, [uid]);
+  }, [fetchReports]);
 
   const UserIcon = () => (
     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">

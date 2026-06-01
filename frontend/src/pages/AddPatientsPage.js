@@ -41,7 +41,7 @@ const Patients = () => {
     setMessage({ text: '', type: '' });
     
     try {
-      const response = await axios.post(`${process.env.REACT_APP_URI}/api/patients`, patientData);
+      await axios.post(`${process.env.REACT_APP_URI}/api/patients`, patientData);
       setMessage({ text: 'Patient added successfully!', type: 'success' });
       resetForm();
     } catch (error) {
